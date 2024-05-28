@@ -36,11 +36,11 @@ fi
 echo -e "\n\n# Hefei Server\n192.168.0.201 git.tpt.hf.com\n192.168.0.202 jenkins.tpt.hf.com\n" | sudo tee -a /etc/hosts
 
 # 挂载NAS
-if [ ! -d "/share/nas" ]; then
-    sudo mkdir -p /share/nas
+if [ ! -d "/share" ]; then
+    sudo mkdir -p /share
 fi
 
-cd /share/nas
+cd /share
 
 if [ ! -d "home" ]; then
     sudo mkdir home
@@ -54,8 +54,8 @@ if [ ! -d "web" ]; then
     sudo mkdir web
 fi
 
-echo -e "username=$tpt_name\npassword=tpt-$tpt_number\ndomain=WORKGROUP\n" | sudo tee /share/nas/auth.smb >/dev/null
-sudo chmod 600 /share/nas/auth.smb
+echo -e "username=$tpt_name\npassword=tpt-$tpt_number\ndomain=WORKGROUP\n" | sudo tee /share/auth.smb >/dev/null
+sudo chmod 600 /share/auth.smb
 
 line=$(grep -n '192.168.0.28' /etc/fstab | cut -d: -f1 | head -n 1)
 echo $line
@@ -66,18 +66,18 @@ if [[ -n "$line" ]] && [[ "$line" =~ ^[0-9]+$ ]]; then
     sudo rm /tmp/fstab.tmp
 fi
 
-echo -e "\n\n//192.168.0.28/Home /share/nas/home cifs _netdev,credentials=/share/nas/auth.smb,uid=1000,gid=1000,nounix,sec=ntlmssp,iocharset=utf8 0 0\n//192.168.0.28/Public /share/nas/public cifs _netdev,credentials=/share/nas/auth.smb,uid=1000,gid=1000,nounix,sec=ntlmssp,iocharset=utf8 0 0\n//192.168.0.28/Web /share/nas/web cifs _netdev,credentials=/share/nas/auth.smb,uid=1000,gid=1000,nounix,sec=ntlmssp,iocharset=utf8 0 0\n" | sudo tee -a /etc/fstab
+echo -e "\n\n//192.168.0.28/Home /share/home cifs _netdev,credentials=/share/auth.smb,uid=1000,gid=1000,nounix,sec=ntlmssp,iocharset=utf8 0 0\n//192.168.0.28/Public /share/public cifs _netdev,credentials=/share/auth.smb,uid=1000,gid=1000,nounix,sec=ntlmssp,iocharset=utf8 0 0\n//192.168.0.28/Web /share/web cifs _netdev,credentials=/share/auth.smb,uid=1000,gid=1000,nounix,sec=ntlmssp,iocharset=utf8 0 0\n" | sudo tee -a /etc/fstab
 sudo mount -a
 
-sudo rm /home/nas
-sudo ln -s /share/nas /home/nas
+sudo rm /home
+sudo ln -s /share /home
 
 if [ -d "$HOME/Desktop" ]; then
-    sudo rm "$HOME/Desktop/nas"
-    sudo ln -s /share/nas "$HOME/Desktop/nas"
+    sudo rm "$HOME/Desktop"
+    sudo ln -s /share "$HOME/Desktop"
 elif [ -d "$HOME/桌面" ]; then
-    sudo rm "$HOME/桌面/nas"
-    sudo ln -s /share/nas "$HOME/桌面/nas"
+    sudo rm "$HOME/桌面"
+    sudo ln -s /share "$HOME/桌面"
 else
     true
 fi
@@ -87,10 +87,10 @@ git config --global user.name "$tpt_name"
 git config --global user.email "$tpt_name@terapines.com"
 
 # 安装常用软件包
-sudo apt install /share/nas/public/archive/1110-ljh/enset/feishu.deb
-sudo apt install /share/nas/public/archive/1110-ljh/enset/edge.deb
-sudo apt install /share/nas/public/archive/1110-ljh/enset/vscode.deb
-sudo apt install /share/nas/public/archive/1110-ljh/enset/wps.deb
+sudo apt install /share/public/archive/1110-ljh/enset/feishu.deb
+sudo apt install /share/public/archive/1110-ljh/enset/edge.deb
+sudo apt install /share/public/archive/1110-ljh/enset/vscode.deb
+sudo apt install /share/public/archive/1110-ljh/enset/wps.deb
 
 
 cd /opt
@@ -100,11 +100,11 @@ sudo rm -rf riscv-toolchain
 sudo rm -rf zcc-toolchain
 sudo rm -rf andes-toolchain
 
-sudo unzip /share/nas/public/archive/1110-ljh/enset/zstudio.zip
-sudo unzip /share/nas/public/archive/1110-ljh/enset/gnu-sdk.zip
-sudo unzip /share/nas/public/archive/1110-ljh/enset/riscv-toolchain.zip
-sudo unzip /share/nas/public/archive/1110-ljh/enset/zcc-toolchain.zip
-sudo unzip /share/nas/public/archive/1110-ljh/enset/andes-toolchain.zip
+sudo unzip /share/public/archive/1110-ljh/enset/zstudio.zip
+sudo unzip /share/public/archive/1110-ljh/enset/gnu-sdk.zip
+sudo unzip /share/public/archive/1110-ljh/enset/riscv-toolchain.zip
+sudo unzip /share/public/archive/1110-ljh/enset/zcc-toolchain.zip
+sudo unzip /share/public/archive/1110-ljh/enset/andes-toolchain.zip
 
 sudo chmod -R 777 zstudio
 sudo chmod -R 777 gnu-sdk
