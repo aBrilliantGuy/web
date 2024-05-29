@@ -94,19 +94,19 @@ sudo apt install /share/public/archive/1110-ljh/enset/wps.deb
 
 
 cd /opt
-sudo rm -rf zstudio
+# sudo rm -rf zstudio
 sudo rm -rf gnu-sdk
 sudo rm -rf riscv-toolchain
 sudo rm -rf zcc-toolchain
 sudo rm -rf andes-toolchain
 
-sudo unzip /share/public/archive/1110-ljh/enset/zstudio.zip
+# sudo unzip /share/public/archive/1110-ljh/enset/zstudio.zip
 sudo unzip /share/public/archive/1110-ljh/enset/gnu-sdk.zip
 sudo unzip /share/public/archive/1110-ljh/enset/riscv-toolchain.zip
 sudo unzip /share/public/archive/1110-ljh/enset/zcc-toolchain.zip
 sudo unzip /share/public/archive/1110-ljh/enset/andes-toolchain.zip
 
-sudo chmod -R 777 zstudio
+# sudo chmod -R 777 zstudio
 sudo chmod -R 777 gnu-sdk
 sudo chmod -R 777 riscv-toolchain
 sudo chmod -R 777 zcc-toolchain
