@@ -19,9 +19,9 @@ sudo apt install \
     openjdk-17-jdk net-tools openssh-server \
     nfs-common openvpn cifs-utils doxygen \
     unzip wget curl gfortran binutils device-tree-compiler \
-    bc ninja-build doxygen graphviz qemu qemu-system qemu-user
+    bc ninja-build doxygen graphviz qemu qemu-system qemu-user -y
 
-sudo apt upgrade
+sudo apt upgrade -y
 sudo apt autoremove
 
 line=$(grep -n '192.168.0.201' /etc/hosts | cut -d: -f1 | head -n 1)
@@ -136,5 +136,5 @@ for extension in "${extensions[@]}"; do
 done
 
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 sudo apt autoremove
